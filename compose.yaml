@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+    fullstack:
+        network_mode: host
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        command: /bin/bash
+        volumes:
+            - .:/app
+            - ~/.git:/home/zulip/.git
+            - ~/.ssh:/home/zulip/.ssh
+        ports:
+            - 8000:8000
+            - 3000:3000
+            - 8081:8081
+            - 1234:1234
+        depends_on:
+            - redis
+            - postgresql
+        shm_size: 4gb
+    redis:
+        image: 'bitnami/redis:latest'
+        ports:
+            - 6355:6355
+        network_mode: host
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+            - REDIS_PORT_NUMBER=6355
+    postgresql:
+        image: bitnami/postgresql:15
+        restart: always
+        volumes:
+            - "$HOME/postgresql-data/zulipbiz:/bitnami/postgresql"
+        environment:
+            - POSTGRESQL_DATABASE=zulipbiz
+            - POSTGRESQL_USERNAME=postgres
+            - POSTGRESQL_PASSWORD=passyword
+            - POSTGRESQL_MASTER_PORT_NUMBER=5455
+        network_mode: host
+        ports:
+            - 5455:5455

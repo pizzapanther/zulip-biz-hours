@@ -1,0 +1,47 @@
+FROM bitnami/minideb:latest
+
+ARG userid
+ARG groupid
+
+RUN mkdir /deps
+WORKDIR /deps
+
+RUN install_packages curl gpg-agent software-properties-common
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN curl -fsSL https://packages.redis.io/gpg | apt-key add -
+RUN echo "deb https://packages.redis.io/deb $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/redis.list
+
+RUN apt-get update
+RUN apt upgrade -y
+
+# Developer tools section: not used in production but nice for dev workflows
+RUN install_packages autojump procps nano sudo tmux openssh-client htop redis-tools wget unzip git
+RUN mv micro /usr/bin
+RUN wget https://github.com/sosedoff/pgweb/releases/download/v0.14.1/pgweb_linux_amd64.zip
+RUN unzip pgweb_linux_amd64.zip
+RUN mv pgweb_linux_amd64 /usr/bin/pgweb
+
+COPY apt-packages.deb.txt /deps/
+RUN install_packages $(grep -vE "^\s*#" /deps/apt-packages.deb.txt | tr "\n" " ")
+
+RUN addgroup zulip --gid $groupid
+RUN useradd -ms /bin/bash -u $userid -g $groupid zulip
+RUN echo 'zulip ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# Use -p to avoid an error if the directory exists
+RUN mkdir -p /app
+RUN chown -R zulip:zulip /app
+
+WORKDIR /app
+USER zulip
+
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV HOME /home/zulip
+ENV USER zulip
+COPY .bashrc /home/zulip/
+RUN ln -s /app/.bash_history /home/zulip/.bash_history
+RUN ln -s /app/.python_history /home/zulip/.python_history
+RUN ln -s /app/.tmux.conf /home/zulip/.tmux.conf
+
+RUN pipx install thefuck
+RUN pipx install pdm
+RUN pipx inject pdm pdm-django
