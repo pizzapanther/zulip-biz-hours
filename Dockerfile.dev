@@ -16,7 +16,6 @@ RUN apt upgrade -y
 
 # Developer tools section: not used in production but nice for dev workflows
 RUN install_packages autojump procps nano sudo tmux openssh-client htop redis-tools wget unzip git
-RUN mv micro /usr/bin
 RUN wget https://github.com/sosedoff/pgweb/releases/download/v0.14.1/pgweb_linux_amd64.zip
 RUN unzip pgweb_linux_amd64.zip
 RUN mv pgweb_linux_amd64 /usr/bin/pgweb
