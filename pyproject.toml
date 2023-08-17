@@ -10,6 +10,7 @@ dependencies = [
     "django-environ>=0.10.0",
     "psycopg2-binary>=2.9.7",
     "zulip>=0.8.2",
+    "django-timezone-field>=5.1",
 ]
 requires-python = ">=3.11"
 readme = "README.md"

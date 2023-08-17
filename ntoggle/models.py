@@ -7,6 +7,7 @@ import zulip
 
 class ZulipUser(models.Model):
   zulip_id = models.PositiveBigIntegerField(unique=True)
+  timezone = TimeZoneField(default="UTC")
 
   created = models.DateTimeField(auto_now_add=True, db_index=True)
 

@@ -6,7 +6,7 @@ groups = ["default"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:01751230ad99bf220aecabc725a276a7b8d11f535ef1dd9233e1c479ebc5148e"
+content_hash = "sha256:0b9905d6593c6c760b0c5d63fd60e8a003d3e47dab8a62fa30bcaca0c9ecf3a0"
 
 [[package]]
 name = "asgiref"
@@ -112,6 +112,20 @@ files = [
 ]
 
 [[package]]
+name = "django-timezone-field"
+version = "5.1"
+requires_python = ">=3.7,<4.0"
+summary = "A Django app providing DB, form, and REST framework fields for zoneinfo and pytz timezone objects."
+dependencies = [
+    "Django!=3.0.*,!=3.1.*,<5.0,>=2.2",
+    "pytz",
+]
+files = [
+    {file = "django_timezone_field-5.1-py3-none-any.whl", hash = "sha256:16ca9955a4e16064e32168b1a0d1cdb2839679c6cb56856c1f49f506e2ca4281"},
+    {file = "django_timezone_field-5.1.tar.gz", hash = "sha256:73fc49519273cd5da1c7f16abc04a4bcad87b00cc02968d0d384c0fecf9a8a86"},
+]
+
+[[package]]
 name = "idna"
 version = "3.4"
 requires_python = ">=3.5"
@@ -153,6 +167,15 @@ files = [
     {file = "psycopg2_binary-2.9.7-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:1011eeb0c51e5b9ea1016f0f45fa23aca63966a4c0afcf0340ccabe85a9f65bd"},
     {file = "psycopg2_binary-2.9.7-cp311-cp311-win32.whl", hash = "sha256:ded8e15f7550db9e75c60b3d9fcbc7737fea258a0f10032cdb7edc26c2a671fd"},
     {file = "psycopg2_binary-2.9.7-cp311-cp311-win_amd64.whl", hash = "sha256:8a136c8aaf6615653450817a7abe0fc01e4ea720ae41dfb2823eccae4b9062a3"},
+]
+
+[[package]]
+name = "pytz"
+version = "2023.3"
+summary = "World timezone definitions, modern and historical"
+files = [
+    {file = "pytz-2023.3-py2.py3-none-any.whl", hash = "sha256:a151b3abb88eda1d4e34a9814df37de2a80e301e68ba0fd856fb9b46bfbbbffb"},
+    {file = "pytz-2023.3.tar.gz", hash = "sha256:1d8ce29db189191fb55338ee6d0387d82ab59f3d00eac103412d64e0ebd0c588"},
 ]
 
 [[package]]
