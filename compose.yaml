@@ -29,15 +29,14 @@ services:
             - ALLOW_EMPTY_PASSWORD=yes
             - REDIS_PORT_NUMBER=6355
     postgresql:
-        image: bitnami/postgresql:15
+        image: postgres:15-bookworm
         restart: always
         volumes:
             - "$HOME/postgresql-data/zulipbiz:/bitnami/postgresql"
         environment:
-            - POSTGRESQL_DATABASE=zulipbiz
-            - POSTGRESQL_USERNAME=postgres
-            - POSTGRESQL_PASSWORD=passyword
-            - POSTGRESQL_MASTER_PORT_NUMBER=5455
+            - POSTGRES_DB=zulipbiz
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=passyword
         network_mode: host
         ports:
-            - 5455:5455
+            - 5432:5432
